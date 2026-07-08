@@ -1,386 +1,106 @@
-"""Hoja de estilos del dashboard (inyectada vía st.markdown)."""
+"""Identidad visual ejecutiva de SafeAnalytics EC."""
 
 import streamlit as st
 
-from dashboard.theme.colores import (
-    AMBAR,
-    FONDO,
-    ROJO,
-    TIERRA,
-    TINTA,
-    TINTA_SUAVE,
-    VERDE,
-    VERDE_OSCURO,
-)
-
 
 def inyectar_css() -> None:
-    """Inyecta la hoja de estilos global del dashboard."""
     st.markdown(
-        f"""
+        """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-html, body, [class*="css"], [data-testid="stAppViewContainer"] * {{
-    font-family: 'Inter', 'Segoe UI', sans-serif;
-}}
-/* restaurar la fuente de iconos: el selector universal de arriba la pisaba y
-   los iconos se veían como texto crudo (p. ej. "keyboard_double_arrow_left") */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
+:root{--navy:#0B1F33;--blue:#176B87;--cyan:#2FA8A0;--green:#2F855A;--amber:#D97706;
+--red:#C2414D;--ink:#172033;--muted:#66758A;--line:#DCE4ED;--surface:#FFFFFF;--bg:#F3F6FA}
+html,body,[class*="css"],[data-testid="stAppViewContainer"] *{font-family:'DM Sans','Segoe UI',sans-serif}
+/* Streamlit representa varios controles con ligaduras de Material Symbols.
+   La regla tipográfica global no debe convertir sus nombres en texto visible. */
 [data-testid="stIconMaterial"],
+span[class*="material-symbols"],
 span[class*="material-icons"],
-span[class*="material-symbols"] {{
-    font-family: 'Material Symbols Rounded', 'Material Symbols Outlined',
-                 'Material Icons' !important;
-}}
-/* iconos Material Symbols dentro de nuestro HTML (hero, tarjetas, notas):
-   la fuente ya la carga Streamlit; la ligadura convierte el nombre en icono */
-.icono-material {{
-    font-family: 'Material Symbols Rounded', 'Material Symbols Outlined',
-                 'Material Icons' !important;
-    font-weight: normal;
-    font-style: normal;
-    font-size: 1.15em;
-    line-height: 1;
-    letter-spacing: normal;
-    display: inline-block;
-    vertical-align: -0.18em;
-}}
-[data-testid="stAppViewContainer"] {{
-    background: {FONDO};
-}}
-[data-testid="stHeader"] {{
-    background: transparent;
-}}
-[data-testid="stSidebar"] {{
-    background: linear-gradient(180deg, {VERDE_OSCURO} 0%, #123021 100%);
-}}
-[data-testid="stSidebar"] * {{
-    color: #E8F2EA !important;
-}}
-/* control del multiselect: fondo translúcido oscuro para que el texto claro se lea */
-[data-testid="stSidebar"] [data-baseweb="select"] > div {{
-    background-color: rgba(255,255,255,.07) !important;
-    border-color: rgba(255,255,255,.22) !important;
-    border-radius: 8px;
-}}
-[data-testid="stSidebar"] [data-baseweb="select"] > div:hover {{
-    border-color: rgba(255,255,255,.4) !important;
-}}
-[data-testid="stSidebar"] [data-baseweb="select"] input {{
-    color: #E8F2EA !important;
-}}
-/* chips seleccionados: contraste legible con texto blanco */
-[data-testid="stSidebar"] .stMultiSelect [data-baseweb="tag"] {{
-    background: {VERDE} !important;
-    border-radius: 6px;
-}}
-[data-testid="stSidebar"] .stMultiSelect [data-baseweb="tag"] span,
-[data-testid="stSidebar"] .stMultiSelect [data-baseweb="tag"] svg {{
-    color: #FFFFFF !important;
-    fill: #FFFFFF !important;
-}}
-/* iconos de flecha y limpiar del selector */
-[data-testid="stSidebar"] [data-baseweb="select"] svg {{
-    fill: #C7D8CB !important;
-}}
-/* menú desplegable (portal en el cuerpo): texto oscuro sobre blanco */
-[data-baseweb="popover"] [role="option"] {{
-    color: {TINTA} !important;
-}}
-[data-testid="stSidebar"] hr {{
-    border-color: rgba(255,255,255,.15);
-}}
+button span[data-testid="stIconMaterial"]{
+  font-family:'Material Symbols Rounded','Material Symbols Outlined','Material Icons'!important;
+  font-weight:normal!important;
+  font-style:normal!important;
+  letter-spacing:normal!important;
+  text-transform:none!important;
+  white-space:nowrap!important;
+  word-wrap:normal!important;
+  direction:ltr!important;
+  -webkit-font-feature-settings:'liga'!important;
+  -webkit-font-smoothing:antialiased!important;
+  font-feature-settings:'liga'!important;
+}
+[data-testid="stAppViewContainer"]{background:var(--bg);color:var(--ink)}
+[data-testid="stMainBlockContainer"]{max-width:1480px;padding:1.7rem 2.1rem 1.3rem}
+[data-testid="stHeader"]{background:transparent}
+footer,[data-testid="stToolbar"]{visibility:hidden}
+[data-testid="stExpandSidebarButton"]{visibility:visible}
+h1,h2,h3,h4{font-family:'Manrope',sans-serif!important;color:var(--ink)!important;letter-spacing:-.025em}
 
-/* ---------------- encabezado hero ---------------- */
-.hero {{
-    background: linear-gradient(120deg, {VERDE_OSCURO} 0%, {VERDE} 62%, #43A047 100%);
-    border-radius: 18px;
-    padding: 28px 34px 26px 34px;
-    color: white;
-    margin-bottom: 6px;
-    box-shadow: 0 8px 24px rgba(27, 67, 50, .25);
-}}
-.hero h1 {{
-    font-size: 1.65rem;
-    font-weight: 800;
-    letter-spacing: -.02em;
-    margin: 0 0 4px 0;
-    color: white;
-}}
-.hero p {{
-    margin: 0;
-    font-size: .92rem;
-    color: rgba(255,255,255,.85);
-    font-weight: 400;
-}}
-.hero .badges {{ margin-top: 14px; }}
-.hero .badge {{
-    display: inline-block;
-    background: rgba(255,255,255,.16);
-    border: 1px solid rgba(255,255,255,.25);
-    border-radius: 999px;
-    padding: 4px 14px;
-    font-size: .74rem;
-    font-weight: 600;
-    margin-right: 8px;
-    letter-spacing: .02em;
-}}
+/* panel de filtros */
+[data-testid="stSidebar"]{background:var(--navy);border-right:1px solid #173853}
+[data-testid="stSidebar"] *{color:#E7F0F8!important}
+.brand{padding:4px 1px 18px;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:18px}
+.brand-mark{display:inline-grid;place-items:center;width:39px;height:39px;border-radius:10px;background:#2FA8A0;
+color:white;font:800 19px Manrope;margin-right:10px}.brand-name{font:800 1rem Manrope;vertical-align:middle}
+.brand-sub{display:block;margin:7px 0 0 52px;color:#91A9BE!important;font-size:.67rem;letter-spacing:.12em;text-transform:uppercase}
+.filter-intro{color:#AFC1D1!important;font-size:.78rem;line-height:1.5;margin:-5px 0 13px}
+[data-testid="stSidebar"] [data-baseweb="select"]>div{background:#112D45!important;border:1px solid #294B64!important;border-radius:9px}
+[data-testid="stSidebar"] .stMultiSelect [data-baseweb="tag"]{background:#176B87!important;border-radius:6px}
+[data-baseweb="popover"] [role="option"]{color:#172033!important}
+[data-testid="stSidebar"] .stButton button{width:100%;background:transparent;border:1px solid #527087;border-radius:9px;color:#DDEAF4!important}
+.source-note{margin-top:15px;padding:12px 13px;border-radius:10px;background:#102A40;border:1px solid #24455E;
+font-size:.7rem;line-height:1.55;color:#9EB4C7!important}.source-note b{color:#60CEC4!important}
 
-/* ---------------- tarjetas KPI ---------------- */
-.kpi {{
-    background: white;
-    border-radius: 14px;
-    padding: 18px 20px 16px 20px;
-    border: 1px solid #E4ECE2;
-    border-top: 4px solid {VERDE};
-    box-shadow: 0 2px 10px rgba(28, 43, 33, .06);
-    height: 100%;
-}}
-.kpi .etiqueta {{
-    font-size: .72rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: .06em;
-    color: {TINTA_SUAVE};
-    margin-bottom: 6px;
-}}
-.kpi .valor {{
-    font-size: 1.9rem;
-    font-weight: 800;
-    letter-spacing: -.03em;
-    color: {TINTA};
-    line-height: 1.1;
-}}
-.kpi .unidad {{
-    font-size: .95rem;
-    font-weight: 600;
-    color: {TINTA_SUAVE};
-}}
-.kpi .pilar {{
-    display: inline-block;
-    margin-top: 10px;
-    font-size: .68rem;
-    font-weight: 700;
-    color: {VERDE};
-    background: #E8F3EA;
-    border-radius: 6px;
-    padding: 3px 9px;
-}}
-.kpi.ambar {{ border-top-color: {AMBAR}; }}
-.kpi.ambar .pilar {{ color: #8A6D00; background: #FDF3D5; }}
-.kpi.tierra {{ border-top-color: {TIERRA}; }}
-.kpi.tierra .pilar {{ color: {TIERRA}; background: #F1EAE7; }}
+/* cabecera */
+.command-header{background:var(--navy);border-radius:18px;padding:25px 28px;color:white;margin-bottom:15px;
+display:flex;justify-content:space-between;gap:24px;align-items:center;box-shadow:0 12px 30px rgba(11,31,51,.16)}
+.command-header .overline{color:#64D3C9;font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase}
+.command-header h1{color:white!important;font-size:2rem;margin:5px 0 4px}.command-header p{color:#B8C9D8;margin:0;font-size:.86rem;max-width:760px}
+.dataset-badge{flex:0 0 auto;padding:10px 13px;border:1px solid #34566E;border-radius:10px;color:#C7D8E5;font-size:.7rem;text-align:right}
+.dataset-badge b{display:block;color:white;font-size:.82rem;margin-bottom:2px}
 
-/* ---------------- contenedores de gráficos ---------------- */
-[data-testid="stVerticalBlockBorderWrapper"]:has(.js-plotly-plot),
-div[data-testid="stDataFrame"] {{
-    background: white;
-    border-radius: 14px;
-    border: 1px solid #E4ECE2;
-    box-shadow: 0 2px 10px rgba(28, 43, 33, .05);
-    padding: 6px;
-}}
+/* KPIs */
+.kpi{background:white;border:1px solid var(--line);border-radius:13px;padding:16px 17px;min-height:145px;
+box-shadow:0 5px 15px rgba(23,32,51,.045);position:relative;overflow:hidden}
+.kpi:before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--blue)}
+.kpi.alerta:before{background:var(--amber)}.kpi.critico:before{background:var(--red)}
+.kpi .etiqueta{color:var(--muted);font-size:.67rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;min-height:31px}
+.kpi .valor{font:800 1.38rem Manrope;color:var(--ink);line-height:1.16;overflow-wrap:anywhere}
+.kpi .unidad{font-size:.76rem;color:var(--muted)}.kpi .pilar{display:inline-block;margin-top:9px;padding:3px 7px;
+border-radius:5px;background:#E8F4F5;color:#176B87;font-size:.59rem;font-weight:700;letter-spacing:.08em}
+.kpi .micro{color:#78869A;font-size:.66rem;line-height:1.3;margin-top:8px}
 
-/* ---------------- pestañas ---------------- */
-.stTabs [data-baseweb="tab-list"] {{
-    gap: 6px;
-    background: transparent;
-    border-bottom: none;
-    margin-top: 8px;
-}}
-.stTabs [data-baseweb="tab"] {{
-    background: white;
-    border: 1px solid #E4ECE2;
-    border-radius: 10px 10px 0 0;
-    padding: 10px 22px;
-    font-weight: 600;
-    color: {TINTA_SUAVE};
-}}
-.stTabs [aria-selected="true"] {{
-    background: {VERDE} !important;
-    color: white !important;
-    border-color: {VERDE} !important;
-}}
-.stTabs [data-baseweb="tab-highlight"], .stTabs [data-baseweb="tab-border"] {{
-    display: none;
-}}
+/* navegación */
+.stTabs [data-baseweb="tab-list"]{gap:5px;margin:20px 0 8px;padding:5px;background:white;border:1px solid var(--line);border-radius:12px}
+.stTabs [data-baseweb="tab"]{height:40px;padding:0 16px;border-radius:8px;color:#617086;font-size:.77rem;font-weight:700}
+.stTabs [aria-selected="true"]{background:var(--navy)!important;color:white!important}
+.stTabs [data-baseweb="tab-highlight"],.stTabs [data-baseweb="tab-border"]{display:none}
+.section-head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin:12px 0 15px}
+.section-kicker{color:var(--blue);font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.section-title{font:800 1.45rem Manrope;color:var(--ink);margin:3px 0}.section-question{color:var(--muted);font-size:.82rem}
+.section-tag{background:#E8F2F5;color:#176B87;border-radius:999px;padding:6px 11px;font-size:.66rem;font-weight:700}
 
-/* ---------------- tarjetas de decisión (prescriptiva) ---------------- */
-.decision-card {{
-    background: white;
-    border-radius: 12px;
-    border: 1px solid #E4ECE2;
-    border-left: 6px solid {AMBAR};
-    padding: 14px 16px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 8px rgba(28,43,33,.05);
-}}
-.decision-card .entidad {{
-    font-weight: 700;
-    font-size: 1rem;
-    color: {TINTA};
-}}
-.decision-card .detalle {{
-    font-size: .8rem;
-    color: {TINTA_SUAVE};
-    margin-top: 2px;
-}}
-.decision-card .accion {{
-    float: right;
-    font-size: .74rem;
-    font-weight: 700;
-    border-radius: 999px;
-    padding: 5px 14px;
-    letter-spacing: .03em;
-}}
-.decision-card.up {{ border-left-color: {VERDE}; }}
-.decision-card.up .accion {{ background: #E8F3EA; color: {VERDE}; }}
-.decision-card.keep .accion {{ background: #FDF3D5; color: #8A6D00; }}
-.decision-card.down {{ border-left-color: {ROJO}; }}
-.decision-card.down .accion {{ background: #FBE4E4; color: {ROJO}; }}
-
-/* ---------------- caja de predicción ---------------- */
-.pred-box {{
-    background: linear-gradient(120deg, {VERDE_OSCURO}, {VERDE});
-    color: white;
-    border-radius: 14px;
-    padding: 22px 26px;
-    text-align: center;
-    box-shadow: 0 6px 18px rgba(27,67,50,.28);
-}}
-.pred-box .titulo {{ font-size: .75rem; font-weight: 600; text-transform: uppercase;
-                     letter-spacing: .08em; color: rgba(255,255,255,.75); }}
-.pred-box .numero {{ font-size: 2.6rem; font-weight: 800; letter-spacing: -.03em; line-height: 1.15; }}
-.pred-box .sub {{ font-size: .85rem; color: rgba(255,255,255,.85); }}
-
-.section-note {{
-    background: white;
-    border: 1px solid #E4ECE2;
-    border-left: 5px solid {VERDE};
-    border-radius: 10px;
-    padding: 14px 18px;
-    font-size: .9rem;
-    color: {TINTA};
-    margin: 4px 0 14px 0;
-}}
-
-/* ---------------- explorador de datos (pestaña Datos) ---------------- */
-.tabla-meta {{
-    background: white;
-    border: 1px solid #E4ECE2;
-    border-radius: 12px;
-    padding: 14px 18px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 8px rgba(28,43,33,.05);
-}}
-.tabla-meta .nombre {{
-    font-weight: 700;
-    font-size: 1.05rem;
-    color: {TINTA};
-}}
-.tabla-meta .tipo {{
-    display: inline-block;
-    margin-left: 10px;
-    font-size: .68rem;
-    font-weight: 700;
-    border-radius: 999px;
-    padding: 3px 12px;
-    letter-spacing: .04em;
-    vertical-align: middle;
-}}
-.tabla-meta .tipo.hecho {{ background: #E8F3EA; color: {VERDE}; }}
-.tabla-meta .tipo.dimension {{ background: #FDF3D5; color: #8A6D00; }}
-.tabla-meta .tipo.externa {{ background: #F1EAE7; color: {TIERRA}; }}
-.tabla-meta .descripcion {{
-    font-size: .82rem;
-    color: {TINTA_SUAVE};
-    margin-top: 4px;
-}}
-
-.quality-card {{
-    background: white;
-    border: 1px solid #E4ECE2;
-    border-left: 5px solid {VERDE};
-    border-radius: 12px;
-    padding: 14px 16px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 8px rgba(28,43,33,.05);
-    height: 100%;
-}}
-.quality-card .titulo {{
-    font-weight: 700;
-    font-size: .86rem;
-    color: {TINTA};
-    margin-bottom: 4px;
-}}
-.quality-card .detalle {{
-    font-size: .8rem;
-    color: {TINTA_SUAVE};
-}}
-.quality-card .ok {{
-    display: inline-block;
-    margin-top: 8px;
-    font-size: .7rem;
-    font-weight: 700;
-    color: {VERDE};
-    background: #E8F3EA;
-    border-radius: 6px;
-    padding: 3px 9px;
-}}
-
-/* ---------------- tarjetas de etapas del pipeline (pestaña Datos) ---------------- */
-.stage-card {{
-    background: white;
-    border: 1px solid #E4ECE2;
-    border-left: 5px solid {VERDE};
-    border-radius: 12px;
-    padding: 14px 16px;
-    margin-bottom: 12px;
-    box-shadow: 0 2px 8px rgba(28,43,33,.05);
-}}
-.stage-card .titulo {{
-    font-weight: 700;
-    font-size: .9rem;
-    color: {TINTA};
-    margin-bottom: 4px;
-}}
-.stage-card .fase {{
-    float: right;
-    font-size: .66rem;
-    font-weight: 700;
-    color: #8A6D00;
-    background: #FDF3D5;
-    border-radius: 999px;
-    padding: 3px 10px;
-    letter-spacing: .03em;
-}}
-.stage-card .detalle {{
-    font-size: .8rem;
-    color: {TINTA_SUAVE};
-}}
-.stage-card .script {{
-    font-family: 'Cascadia Code', 'Consolas', monospace;
-    font-size: .72rem;
-    color: {VERDE_OSCURO};
-    background: #F1F5EF;
-    border-radius: 6px;
-    padding: 3px 8px;
-    display: inline-block;
-    margin-top: 8px;
-}}
-.stage-card .artefactos {{
-    font-size: .76rem;
-    color: {TINTA_SUAVE};
-    margin-top: 8px;
-    line-height: 1.6;
-}}
-.stage-card .artefactos .ok {{ color: {VERDE}; font-weight: 600; }}
-.stage-card .artefactos .falta {{ color: {ROJO}; font-weight: 600; }}
-
-footer, [data-testid="stToolbar"] {{ visibility: hidden; }}
-/* el botón de reabrir la sidebar vive DENTRO del stToolbar oculto; visibility
-   (a diferencia de display) se puede revertir en un descendiente */
-[data-testid="stExpandSidebarButton"] {{ visibility: visible; }}
+[data-testid="stVerticalBlockBorderWrapper"]:has(.js-plotly-plot),div[data-testid="stDataFrame"]{
+background:white;border:1px solid var(--line);border-radius:13px;box-shadow:0 4px 14px rgba(23,32,51,.035);padding:5px}
+[data-testid="stMetric"]{background:white;border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+.insight{background:#EDF6F6;border:1px solid #CBE7E5;border-left:4px solid var(--cyan);border-radius:10px;
+padding:13px 15px;color:#294B59;font-size:.8rem;line-height:1.5;margin:4px 0 14px}
+.insight.warning{background:#FFF7E8;border-color:#F2D8A8;border-left-color:var(--amber);color:#6E4D17}
+.story-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:7px 0 15px}
+.story-card{background:white;border:1px solid var(--line);border-radius:12px;padding:17px}
+.story-card .label{color:var(--blue);font-size:.63rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase}
+.story-card h4{font-size:.94rem;margin:7px 0}.story-card p{color:var(--muted);font-size:.76rem;line-height:1.5;margin:0}
+.analytics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:10px 0 15px}
+.analytics-chip{background:#102A40;color:white;border-radius:10px;padding:12px}.analytics-chip b{display:block;color:#64D3C9;font-size:.68rem}
+.analytics-chip span{font-size:.7rem;color:#C4D3DF}
+.action-card{background:white;border:1px solid var(--line);border-radius:12px;padding:15px;margin-bottom:10px}
+.action-card.high{border-left:5px solid var(--red)}.action-card.medium{border-left:5px solid var(--amber)}
+.action-card .priority{font-size:.61rem;font-weight:800;letter-spacing:.1em;color:var(--red)}
+.action-card.medium .priority{color:var(--amber)}.action-card h4{margin:5px 0;font-size:.91rem}
+.action-card p{margin:0;color:var(--muted);font-size:.75rem;line-height:1.45}
+.footer-line{border-top:1px solid var(--line);margin-top:25px;padding:16px 0 3px;display:flex;justify-content:space-between;color:#7B899B;font-size:.66rem}
+@media(max-width:900px){[data-testid="stMainBlockContainer"]{padding:1rem}.command-header{display:block}.dataset-badge{margin-top:15px;text-align:left}
+.story-grid,.analytics-row{grid-template-columns:1fr}.stTabs [data-baseweb="tab"]{padding:0 9px}}
 </style>
 """,
         unsafe_allow_html=True,

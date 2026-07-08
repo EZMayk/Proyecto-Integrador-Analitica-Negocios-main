@@ -1,21 +1,16 @@
-"""Encabezado ejecutivo de SafeAnalytics EC."""
+"""Cabecera institucional del dashboard."""
 
 import streamlit as st
 
 
 def renderizar_hero(total: int) -> None:
     st.markdown(
-        f"""
-<div class="hero">
-  <h1><span class="icono-material">shield</span> SafeAnalytics EC</h1>
-  <p>Sistema Inteligente de Analítica de Negocios para el Monitoreo y Análisis
-  Estratégico de Homicidios Intencionales en Ecuador</p>
-  <div class="badges">
-    <span class="badge">Ecuador · enero–mayo 2026</span>
-    <span class="badge">{total:,} registros procesados</span>
-    <span class="badge">Dataset histórico estático</span>
-  </div>
-</div>
-""",
+        f"""<div class="command-header"><div>
+        <div class="overline">Centro de comando ejecutivo · Analítica de negocios</div>
+        <h1>SafeAnalytics EC</h1>
+        <p>Sistema Inteligente para el Monitoreo y Análisis Estratégico de
+        Homicidios Intencionales en Ecuador.</p></div>
+        <div class="dataset-badge"><b>{total:,} registros consolidados</b>
+        Ecuador · enero—mayo 2026<br>Actualización mediante dataset</div></div>""",
         unsafe_allow_html=True,
     )

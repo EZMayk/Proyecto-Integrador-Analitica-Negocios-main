@@ -1,47 +1,53 @@
-"""Portada ejecutiva del sistema."""
+"""Vista ejecutiva de presentación."""
 
+import pandas as pd
 import streamlit as st
 
 
-def renderizar_portada() -> None:
-    st.subheader("Portada ejecutiva")
+def renderizar_portada(datos: pd.DataFrame) -> None:
+    provincias = datos["provincia"].nunique()
+    cantones = datos["canton"].nunique()
     st.markdown(
-        """
-### SafeAnalytics EC
-
-**Sistema Inteligente de Analítica de Negocios para el Monitoreo y Análisis
-Estratégico de Homicidios Intencionales en Ecuador.**
-
-#### Problemática
-
-Las instituciones encargadas de la seguridad ciudadana generan grandes volúmenes
-de información sobre homicidios intencionales. Cuando estos datos permanecen
-dispersos en bases y reportes tabulares, se dificulta identificar oportunamente
-patrones delictivos y orientar operativos, recursos policiales y políticas de
-prevención.
-
-El análisis manual limita la detección de provincias, cantones y zonas con mayor
-incidencia, horarios críticos, armas utilizadas y perfiles predominantes. Este
-dashboard consolida la información en una plataforma visual e interactiva para
-facilitar el análisis dinámico y la toma de decisiones basada en datos.
-
-#### Objetivo
-
-Diseñar y desarrollar un Dashboard Ejecutivo interactivo para visualizar y
-analizar los principales indicadores de homicidios intencionales registrados en
-Ecuador, mediante analítica descriptiva, diagnóstica, predictiva y prescriptiva,
-con el propósito de identificar patrones geográficos, temporales y delictivos que
-apoyen decisiones estratégicas en seguridad ciudadana.
-
-#### Alcance
-
-- Registros de Ecuador entre enero y mayo de 2026.
-- Análisis geográfico, temporal, delictivo y demográfico.
-- Proyección académica de tendencia y priorización territorial.
-- Actualización mediante la sustitución y procesamiento del dataset fuente.
-"""
+        """<div class="section-head"><div>
+        <div class="section-kicker">Vista ejecutiva</div>
+        <div class="section-title">Inteligencia para decisiones en seguridad ciudadana</div>
+        <div class="section-question">¿Cómo convierte SafeAnalytics EC los registros
+        históricos en información estratégica?</div></div>
+        <span class="section-tag">ANALÍTICA DE NEGOCIOS</span></div>""",
+        unsafe_allow_html=True,
     )
-    st.warning(
-        "El análisis se basa en un archivo histórico estático. No corresponde a "
-        "una fuente de actualización continua ni sustituye análisis criminológicos u operativos oficiales."
+    st.markdown(
+        f"""<div class="story-grid">
+        <div class="story-card"><div class="label">Problemática</div>
+        <h4>Datos dispersos, decisiones más lentas</h4>
+        <p>Los reportes tabulares dificultan detectar territorios, horarios y factores
+        delictivos prioritarios. El sistema consolida la información y reduce esa brecha.</p></div>
+        <div class="story-card"><div class="label">Objetivo</div>
+        <h4>Transformar registros en señales ejecutivas</h4>
+        <p>Visualizar indicadores y patrones mediante analítica descriptiva, diagnóstica,
+        predictiva y prescriptiva para apoyar decisiones estratégicas.</p></div>
+        <div class="story-card"><div class="label">Alcance del segmento</div>
+        <h4>{len(datos):,} registros · {provincias} provincias · {cantones} cantones</h4>
+        <p>Homicidios intencionales registrados en Ecuador entre enero y mayo de 2026,
+        ajustados por los filtros activos.</p></div>
+        <div class="story-card"><div class="label">Uso esperado</div>
+        <h4>Priorización territorial y operativa</h4>
+        <p>Orienta la lectura de tendencias, la focalización de recursos y la formulación
+        de recomendaciones sustentadas en datos.</p></div></div>""",
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        """<div class="analytics-row">
+        <div class="analytics-chip"><b>DESCRIPTIVA</b><span>¿Qué ocurrió?</span></div>
+        <div class="analytics-chip"><b>DIAGNÓSTICA</b><span>¿Dónde y por qué?</span></div>
+        <div class="analytics-chip"><b>PREDICTIVA</b><span>¿Qué podría ocurrir?</span></div>
+        <div class="analytics-chip"><b>PRESCRIPTIVA</b><span>¿Qué acciones priorizar?</span></div>
+        </div>""",
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        """<div class="insight warning"><b>Alcance metodológico.</b> El análisis utiliza
+        un dataset histórico estático. La proyección es referencial y académica; no
+        constituye un modelo criminológico profesional ni sustituye el criterio institucional.</div>""",
+        unsafe_allow_html=True,
     )

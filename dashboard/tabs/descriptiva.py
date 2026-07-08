@@ -12,8 +12,13 @@ def _conteo(datos: pd.DataFrame, campo: str, n: int | None = None) -> pd.DataFra
 
 
 def renderizar_descriptiva(datos: pd.DataFrame) -> None:
-    st.subheader("Analítica descriptiva")
-    st.caption("Distribución geográfica, temporal y delictiva de los registros filtrados.")
+    st.markdown(
+        """<div class="section-head"><div><div class="section-kicker">Analítica descriptiva</div>
+        <div class="section-title">Panorama de los hechos registrados</div>
+        <div class="section-question">Pregunta de negocio: ¿qué ocurrió y cómo se distribuyen
+        los casos?</div></div><span class="section-tag">EVIDENCIA HISTÓRICA</span></div>""",
+        unsafe_allow_html=True,
+    )
     izq, der = st.columns(2)
     provincia = _conteo(datos, "provincia")
     izq.plotly_chart(px.bar(
@@ -25,6 +30,14 @@ def renderizar_descriptiva(datos: pd.DataFrame) -> None:
         canton.sort_values("total"), x="total", y="canton", orientation="h",
         title="Top 15 cantones", labels={"total": "Casos", "canton": ""},
     ), width="stretch")
+    top_prov = provincia.iloc[0]
+    top_canton = canton.iloc[0]
+    st.markdown(
+        f"""<div class="insight"><b>Lectura territorial.</b> {top_prov['provincia']} lidera
+        la distribución con {int(top_prov['total']):,} casos. A escala local,
+        {top_canton['canton']} registra la mayor concentración del segmento analizado.</div>""",
+        unsafe_allow_html=True,
+    )
 
     mensual = (
         datos.groupby(["mes", "nombre_mes"], as_index=False)["total"].sum().sort_values("mes")
@@ -35,6 +48,13 @@ def renderizar_descriptiva(datos: pd.DataFrame) -> None:
     )
     fig.update_traces(line_width=4)
     st.plotly_chart(fig, width="stretch")
+    pico = mensual.loc[mensual["total"].idxmax()]
+    st.markdown(
+        f"""<div class="insight"><b>Lectura temporal.</b> {pico['nombre_mes']} presenta el
+        máximo mensual con {int(pico['total']):,} casos. La línea permite evaluar cambios
+        de magnitud entre los cinco periodos observados.</div>""",
+        unsafe_allow_html=True,
+    )
 
     c1, c2, c3 = st.columns(3)
     c1.plotly_chart(px.pie(
