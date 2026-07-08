@@ -1,0 +1,39 @@
+{
+  "total_homicidios": 3458,
+  "periodo": "enero a mayo de 2026",
+  "provincia_mayor_incidencia": [
+    {
+      "provincia": "GUAYAS",
+      "casos": 1509
+    }
+  ],
+  "canton_mayor_incidencia": [
+    {
+      "canton": "GUAYAQUIL",
+      "casos": 936
+    }
+  ],
+  "arma_mas_utilizada": [
+    {
+      "arma": "ARMA DE FUEGO",
+      "casos": 3040
+    }
+  ],
+  "franja_mas_frecuente": [
+    {
+      "franja_horaria": "Noche",
+      "casos": 1442
+    }
+  ],
+  "porcentaje_arma_fuego": 87.91,
+  "proyeccion_siguiente_periodo": 653,
+  "advertencia_prediccion": "Proyección referencial y académica basada en tendencia lineal; no constituye un modelo criminológico profesional.",
+  "recomendaciones": [
+    "Priorizar GUAYAQUIL (GUAYAS) en la distribución de recursos: 936 casos y score 1770.1.",
+    "Priorizar MACHALA (EL ORO) en la distribución de recursos: 192 casos y score 355.3.",
+    "Priorizar DURÁN (GUAYAS) en la distribución de recursos: 156 casos y score 302.7.",
+    "Reforzar despliegue preventivo en ZONA 8 durante noche y madrugada.",
+    "Focalizar controles de armas de fuego alrededor de VÍA PÚBLICA, donde se concentra su mayor frecuencia.",
+    "Revisar la asignación semanal con datos actualizados y coordinación territorial."
+  ]
+}

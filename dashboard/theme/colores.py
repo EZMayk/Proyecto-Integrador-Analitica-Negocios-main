@@ -1,0 +1,15 @@
+"""Paleta institucional de seguridad y analítica."""
+
+VERDE = "#1565C0"
+VERDE_OSCURO = "#0B1F3A"
+VERDE_CLARO = "#42A5F5"
+TIERRA = "#546E7A"
+AMBAR = "#F9A825"
+ROJO = "#C62828"
+FONDO = "#F4F7FB"
+TINTA = "#172033"
+TINTA_SUAVE = "#5E6B7A"
+SECUENCIA_COLORES = [
+    "#1565C0", "#00ACC1", "#5E35B1", "#F9A825", "#C62828",
+    "#546E7A", "#2E7D32", "#EF6C00", "#00897B",
+]
